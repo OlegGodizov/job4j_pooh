@@ -3,7 +3,6 @@ package ru.job4j.pooh;
 public record Req(String httpRequestType, String poohMode, String sourceName, String param) {
 
     public static Req of(String content) {
-        System.out.println(content);
         String[] lines = content.split(System.lineSeparator());
         String[] requestHead = lines[0].split(" ");
         String type = requestHead[0];

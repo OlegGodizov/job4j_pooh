@@ -10,7 +10,7 @@ public class TopicService implements Service {
 
     @Override
     public Resp process(Req req) {
-        String status, text = "";
+        String status = "501", text = "";
         if ("POST".equals(req.httpRequestType())) {
             Map<String, ConcurrentLinkedQueue<String>> map = topics.get(req.sourceName());
             status = "204";
@@ -20,7 +20,7 @@ public class TopicService implements Service {
                 }
                 status = "200";
             }
-        } else {
+        } else if ("GET".equals(req.httpRequestType())) {
             topics.putIfAbsent(req.sourceName(), new ConcurrentHashMap<>());
             topics.get(req.sourceName()).putIfAbsent(req.param(), new ConcurrentLinkedQueue<>());
             String poll = topics.get(req.sourceName()).get(req.param()).poll();
